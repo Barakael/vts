@@ -3,13 +3,13 @@ import axios from 'axios';
 const client = axios.create({
   baseURL: 'http://localhost:8000',
   withCredentials: true,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Accept': 'application/json',
+  },
 });
 
-client.interceptors.request.use(async config => {
-  if (!document.cookie.includes('XSRF-TOKEN')) {
-    await axios.get('http://localhost:8000/sanctum/csrf-cookie', { withCredentials: true });
-  }
-  return config;
-});
+client.defaults.xsrfCookieName = 'XSRF-TOKEN';
+client.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
 
 export default client;
