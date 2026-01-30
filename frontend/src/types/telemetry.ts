@@ -4,6 +4,17 @@ export type Device = {
   id: number;
   name: string | null;
   imei: string;
+  model: string | null;
+  last_seen_at: string | null;
+  last_fix_at: string | null;
+  last_latitude: number | null;
+  last_longitude: number | null;
+  last_speed: number | null;
+  last_angle: number | null;
+  last_satellites: number | null;
+  last_payload: Record<string, unknown> | null;
+  created_at: string;
+  updated_at: string;
 };
 
 export type DevicePosition = {
