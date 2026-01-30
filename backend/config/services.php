@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'teltonika' => [
+        'host' => env('TELTONIKA_TCP_HOST', '0.0.0.0'),
+        'port' => (int) env('TELTONIKA_TCP_PORT', 9000),
+    ],
+
 ];
