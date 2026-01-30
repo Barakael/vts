@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(true);
       const response = (await fetchUser()) as UserResponse;
       setUser(response?.data?.user ?? null);
-    } catch (error) {
+    } catch {
       setUser(null);
     } finally {
       setLoading(false);
