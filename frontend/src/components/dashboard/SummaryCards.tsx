@@ -56,7 +56,7 @@ export default function SummaryCards({ devices, loading }: SummaryCardsProps) {
     { title: 'Total Devices', value: totalDevices, subtitle: 'Registered in system', icon: 'device', color: '#3b82f6', bgColor: '#dbeafe' },
     { title: 'Active Now', value: activeDevices, subtitle: 'Sending data (5 min)', icon: 'signal', color: '#10b981', bgColor: '#d1fae5' },
     { title: 'GPS Fix', value: devicesWithFix, subtitle: 'With valid location', icon: 'mapPin', color: '#8b5cf6', bgColor: '#ede9fe' },
-    { title: 'Avg Speed', value: `${avgSpeed} km/h`, subtitle: 'Across all devices', icon: 'speed', color: '#f59e0b', bgColor: '#fef3c7' },
+    // { title: 'Avg Speed', value: `${avgSpeed} km/h`, subtitle: 'Across all devices', icon: 'speed', color: '#f59e0b', bgColor: '#fef3c7' },
   ];
 
   if (loading) {
