@@ -11,6 +11,11 @@ Route::post('/login', [AuthApiController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function (): void {
 	Route::post('/logout', [AuthApiController::class, 'logout']);
 	Route::get('/user', [AuthApiController::class, 'user']);
+
+	// Device CRUD routes
+	Route::post('/devices', [DeviceController::class, 'store']);
+	Route::put('/devices/{id}', [DeviceController::class, 'update']);
+	Route::delete('/devices/{id}', [DeviceController::class, 'destroy']);
 });
 
 // Device routes - PUBLIC (no auth required)
