@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { login } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
+import client from '../api/client';
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { refreshUser } = useAuth();
   
   const [email, setEmail] = useState('');
@@ -20,10 +22,24 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await login({ email, password });
+      console.log('Login form submitted with:', { email, password });
+      
+      // Ensure CSRF token is available
+      console.log('Ensuring CSRF token...');
+      await client.get('/sanctum/csrf-cookie');
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for cookie
+      
+      console.log('Making login request...');
+      const response = await login({ email, password });
+      console.log('Login response:', response);
+      
       await refreshUser();
-      navigate('/dashboard');
+      
+      // Redirect to the intended page or dashboard
+      const from = location.state?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
     } catch (err: unknown) {
+      console.error('Login error:', err);
       const error = err as { response?: { data?: { message?: string } } };
       setError(error.response?.data?.message || 'Invalid credentials. Please try again.');
     } finally {
