@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -18,6 +19,8 @@ class Device extends Model
         'name',
         'imei',
         'model',
+        'reg_no',
+        'sim_no',
         'last_seen_at',
         'last_fix_at',
         'last_latitude',
@@ -26,6 +29,7 @@ class Device extends Model
         'last_angle',
         'last_satellites',
         'last_payload',
+        'updated_by',
     ];
 
     /**
@@ -47,5 +51,10 @@ class Device extends Model
     public function latestPosition(): HasOne
     {
         return $this->hasOne(DevicePosition::class)->latestOfMany('recorded_at');
+    }
+
+    public function updater(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }
