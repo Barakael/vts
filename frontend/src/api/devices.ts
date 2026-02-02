@@ -88,3 +88,39 @@ export async function fetchDevicePositions(deviceId: number, page = 1, perPage =
   const response = await client.get<DevicePositionsResponse>(`/api/devices/${deviceId}/positions?page=${page}&per_page=${perPage}&order=desc`);
   return response.data;
 }
+
+/**
+ * Create a new device
+ */
+export async function createDevice(data: {
+  name?: string;
+  imei: string;
+  model?: string;
+  reg_no?: string;
+  sim_no?: string;
+}): Promise<DeviceResponse> {
+  const response = await client.post<DeviceResponse>('/api/devices', data);
+  return response.data;
+}
+
+/**
+ * Update a device
+ */
+export async function updateDevice(id: number, data: {
+  name?: string;
+  imei: string;
+  model?: string;
+  reg_no?: string;
+  sim_no?: string;
+}): Promise<DeviceResponse> {
+  const response = await client.put<DeviceResponse>(`/api/devices/${id}`, data);
+  return response.data;
+}
+
+/**
+ * Delete a device
+ */
+export async function deleteDevice(id: number): Promise<{ success: boolean; message: string }> {
+  const response = await client.delete<{ success: boolean; message: string }>(`/api/devices/${id}`);
+  return response.data;
+}
