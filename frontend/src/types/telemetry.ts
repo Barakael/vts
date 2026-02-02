@@ -5,6 +5,8 @@ export type Device = {
   name: string | null;
   imei: string;
   model: string | null;
+  reg_no: string | null;
+  sim_no: string | null;
   last_seen_at: string | null;
   last_fix_at: string | null;
   last_latitude: number | null;
@@ -13,6 +15,7 @@ export type Device = {
   last_angle: number | null;
   last_satellites: number | null;
   last_payload: Record<string, unknown> | null;
+  updated_by: number | null;
   created_at: string;
   updated_at: string;
 };
