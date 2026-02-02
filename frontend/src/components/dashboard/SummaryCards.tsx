@@ -48,10 +48,7 @@ export default function SummaryCards({ devices, loading }: SummaryCardsProps) {
     return new Date(d.last_seen_at) >= fiveMinutesAgo;
   }).length;
   const devicesWithFix = devices.filter((d) => d.last_latitude && d.last_longitude).length;
-  const avgSpeed = devices.length > 0
-    ? Math.round(devices.reduce((sum, d) => sum + (d.last_speed || 0), 0) / (devices.filter(d => d.last_speed).length || 1))
-    : 0;
-
+  
   const stats: StatCard[] = [
     { title: 'Total Devices', value: totalDevices, subtitle: 'Registered in system', icon: 'device', color: '#3b82f6', bgColor: '#dbeafe' },
     { title: 'Active Now', value: activeDevices, subtitle: 'Sending data (5 min)', icon: 'signal', color: '#10b981', bgColor: '#d1fae5' },
