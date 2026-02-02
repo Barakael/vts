@@ -101,6 +101,74 @@ class DeviceController extends Controller
     }
 
     /**
+     * Create a new device
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'imei' => 'required|string|unique:devices,imei',
+            'model' => 'nullable|string|max:255',
+            'reg_no' => 'nullable|string|max:255',
+            'sim_no' => 'nullable|string|max:255',
+        ]);
+
+        $validated['updated_by'] = $request->user()->id;
+
+        $device = Device::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'device' => $device,
+            ],
+            'message' => 'Device created successfully',
+        ], 201);
+    }
+
+    /**
+     * Update a device
+     */
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $device = Device::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'imei' => 'required|string|unique:devices,imei,' . $id,
+            'model' => 'nullable|string|max:255',
+            'reg_no' => 'nullable|string|max:255',
+            'sim_no' => 'nullable|string|max:255',
+        ]);
+
+        $validated['updated_by'] = $request->user()->id;
+
+        $device->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'device' => $device,
+            ],
+            'message' => 'Device updated successfully',
+        ]);
+    }
+
+    /**
+     * Delete a device
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        $device = Device::findOrFail($id);
+        $device->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Device deleted successfully',
+        ]);
+    }
+
+    /**
      * Get available device models
      */
     public function models(): JsonResponse
