@@ -8,3 +8,8 @@ Route::get('/', function () {
 });
 
 Route::get('/tracker', [DevicePositionController::class, 'tracker']);
+
+// SPA catch-all route - must be last
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
