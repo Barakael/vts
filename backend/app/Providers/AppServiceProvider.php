@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Jobs\SendLatraPosition;
+use App\Models\DevicePosition;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (! config('latra.enabled')) {
+            return;
+        }
+
+        DevicePosition::created(function (DevicePosition $position): void {
+            $identifier = $position->getKey();
+            if ($identifier === null) {
+                return;
+            }
+
+            SendLatraPosition::dispatch($identifier)->afterCommit();
+        });
     }
 }
