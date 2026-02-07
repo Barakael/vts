@@ -63,7 +63,34 @@ Save + reboot the tracker; you should see the IMEI handshake appear in the artis
 
 ---
 
-## 4. Visualize telemetry
+## 4. Forward telemetry to LATRA
+
+The system can optionally push every stored `device_positions` record to SUMATRA/LATRA using their JSON API.
+
+1. Set the credentials and endpoint in `.env` (all keys live under `LATRA_*`; see `config/latra.php`). At minimum provide:
+
+	| Variable | Example |
+	| --- | --- |
+	| `LATRA_ENABLED` | `true` |
+	| `LATRA_BASE_URL` | `http://IPADDRESS:8090` |
+	| `LATRA_ENDPOINT` | `/data-integration/integration/gps` |
+	| `LATRA_USERNAME` / `LATRA_PASSWORD` | Provided Basic Auth creds |
+
+	Optional `LATRA_IO_*` ids let you map Teltonika IO parameters (HDOP, RSSI, MCC, LAC, Cell ID) into the payload.
+
+2. Make sure every `devices` row has a registration number (`reg_no`) and IMEI; those fields are required by LATRA.
+
+3. Run the Teltonika listener **and** a queue worker side-by-side so outbound jobs can execute:
+
+```bash
+php artisan queue:work
+```
+
+With `LATRA_ENABLED=true`, each new `DevicePosition` dispatches a queued job that builds the JSON payload and POSTs it to LATRA via Basic Auth. Success/failure logs are written to the default log channel for auditing.
+
+---
+
+## 5. Visualize telemetry
 
 Serve the Laravel app (or the React frontend) and open [http://localhost:8000/tracker](http://localhost:8000/tracker) to see the built-in Leaflet dashboard.
 
@@ -78,7 +105,7 @@ The dashboard polls `/api/device-positions/latest` every 10 seconds and renders 
 
 ---
 
-## 5. Troubleshooting
+## 6. Troubleshooting
 
 - **Listener never sees traffic**: confirm the tracker is online (green LED) and that ngrok still lists the TCP tunnel. Many carriers block custom ports unless you use the APN for IoT/M2M cards.
 - **CRC or codec errors**: older firmware may use Codec 8. The decoder currently accepts codecs 8, 12, 16, and 18; upgrade firmware if you are on legacy variants.
@@ -87,7 +114,7 @@ The dashboard polls `/api/device-positions/latest` every 10 seconds and renders 
 
 ---
 
-## 6. Next steps
+## 7. Next steps
 
 - Add authentication/authorization to the tracker dashboard.
 - Extend the IO parser if you need ADC, CAN, or BLE sensor data.
