@@ -19,6 +19,19 @@ return [
         16 => 16,
     ],
 
+    /*
+     | Sanitizer rules
+     */
+    'speed_cap'           => (int) env('LATRA_SPEED_CAP', 90),
+    'expected_interval'   => (int) env('LATRA_EXPECTED_INTERVAL', 30),
+
+    /*
+     | Misbehavior detection
+     */
+    'hard_fault_io_id'    => env('LATRA_HARD_FAULT_IO_ID') !== null ? (int) env('LATRA_HARD_FAULT_IO_ID') : null,
+    'hard_fault_values'   => [1, 2],
+    'activity_id_tamper'  => (int) env('LATRA_ACTIVITY_ID_TAMPER', 14),
+
     'io_keys' => [
         'hdop' => env('LATRA_IO_HDOP_ID') !== null ? (int) env('LATRA_IO_HDOP_ID') : null,
         'rssi' => env('LATRA_IO_RSSI_ID') !== null ? (int) env('LATRA_IO_RSSI_ID') : null,
