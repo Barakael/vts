@@ -127,6 +127,15 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'latra_audit' => [
+            'driver'            => 'daily',
+            'path'              => storage_path('logs/misbehavior_audit.log'),
+            'level'             => 'debug',
+            'days'              => 90,
+            'bubble'            => false,
+            'replace_placeholders' => true,
+        ],
+
     ],
 
 ];
