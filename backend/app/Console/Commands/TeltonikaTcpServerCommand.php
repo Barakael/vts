@@ -14,6 +14,9 @@ class TeltonikaTcpServerCommand extends Command
      */
     protected $signature = 'teltonika:listen {--host=} {--port=}';
 
+    /** Alias so `teltonika:serve` also works */
+    protected $aliases = ['teltonika:serve'];
+
     /**
      * @var string
      */
