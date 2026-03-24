@@ -64,7 +64,7 @@ export default function DashboardPage() {
 			const now = Date.now();
 			const cachedPage = cache[page];
 
-			if (!force && cachedPage && now - cachedPage.timestamp < 30000) {
+			if (!force && cachedPage && now - cachedPage.timestamp < 10000) {
 				setPositions(cachedPage.positions);
 				setPagination({ ...cachedPage.pagination });
 				setLastUpdated(cachedPage.timestamp);
@@ -99,7 +99,7 @@ export default function DashboardPage() {
 
 	useEffect(() => {
 		loadPage(currentPage);
-		const id = setInterval(() => loadPage(currentPage), 30000);
+		const id = setInterval(() => loadPage(currentPage, true), 10000);
 		return () => clearInterval(id);
 	}, [currentPage, loadPage]);
 
@@ -248,7 +248,7 @@ export default function DashboardPage() {
 								<h1 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">{greeting}</h1>
 								<p className="mt-2 max-w-2xl text-sm text-slate-400">
 									Monitor live GPS telemetry, evaluate fleet performance, and investigate anomalies from a single
-									command-center view. Data auto-refreshes every 30 seconds and is cached locally for speed.
+									command-center view. Data auto-refreshes every 10 seconds and newest records appear at the top.
 								</p>
 							</div>
 							<div className="flex flex-col gap-3 sm:flex-row">
