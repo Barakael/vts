@@ -9,6 +9,7 @@ interface SidebarProps {
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: 'home' },
   { name: 'Devices', href: '/devices', icon: 'device' },
+  { name: 'Logs', href: '/logs', icon: 'logs' },
   { name: 'Live Map', href: '/map', icon: 'map' },
   { name: 'Analytics', href: '/analytics', icon: 'chart' },
   { name: 'Settings', href: '/settings', icon: 'cog' },
@@ -41,6 +42,11 @@ const icons: Record<string, ReactNode> = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
     </svg>
   ),
+  logs: (
+    <svg style={{ width: '20px', height: '20px' }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+    </svg>
+  ),
 };
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
@@ -69,9 +75,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           zIndex: 50,
           height: '100vh',
           width: '256px',
-          backgroundColor: 'white',
-          borderRight: '1px solid #e5e7eb',
-          boxShadow: '2px 0 8px rgba(0, 0, 0, 0.04)'
+          backgroundColor: '#0f172a',
+          borderRight: '1px solid #1e293b',
+          boxShadow: '2px 0 8px rgba(0, 0, 0, 0.3)'
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -82,14 +88,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             justifyContent: 'center',
             height: '64px',
             padding: '0 16px',
-            borderBottom: '1px solid #e5e7eb'
+            borderBottom: '1px solid #1e293b'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{
                 width: '40px',
                 height: '40px',
                 borderRadius: '8px',
-                background: 'linear-gradient(to bottom right, #3b82f6, #22d3ee)',
+                background: 'linear-gradient(to bottom right, #65a30d, #84cc16)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -98,7 +104,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
                 </svg>
               </div>
-              <span style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '-0.025em', color: '#111827' }}>VTS</span>
+              <span style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '-0.025em', color: '#84cc16' }}>VTS</span>
             </div>
           </div>
 
@@ -119,9 +125,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     fontWeight: '500',
                     textDecoration: 'none',
                     transition: 'all 200ms',
-                    backgroundColor: isActive ? '#eff6ff' : 'transparent',
-                    color: isActive ? '#2563eb' : '#6b7280',
-                    borderLeft: isActive ? '3px solid #2563eb' : '3px solid transparent'
+                    backgroundColor: isActive ? '#1e293b' : 'transparent',
+                    color: isActive ? '#84cc16' : '#94a3b8',
+                    borderLeft: isActive ? '3px solid #84cc16' : '3px solid transparent'
                   })}
                   onClick={() => onClose()}
                 >
@@ -133,7 +139,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           </nav>
 
           {/* Footer */}
-          <div style={{ padding: '12px', borderTop: '1px solid #e5e7eb' }}>
+          <div style={{ padding: '12px', borderTop: '1px solid #1e293b' }}>
             <button style={{
               display: 'flex',
               alignItems: 'center',
@@ -142,7 +148,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               padding: '12px 16px',
               fontSize: '14px',
               fontWeight: '500',
-              color: '#6b7280',
+              color: '#94a3b8',
               borderRadius: '8px',
               border: 'none',
               backgroundColor: 'transparent',
