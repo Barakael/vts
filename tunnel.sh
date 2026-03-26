@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+w#!/usr/bin/env bash
 # Persistent reverse SSH tunnel: VPS:9000 → local Mac:9000
 # Devices connect to 147.79.101.245:9000 and are forwarded here.
 
