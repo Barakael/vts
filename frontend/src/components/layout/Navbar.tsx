@@ -12,9 +12,9 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
       position: 'sticky',
       top: 0,
       zIndex: 30,
-      backgroundColor: 'white',
-      borderBottom: '1px solid #e5e7eb',
-      boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+      backgroundColor: '#0f172a',
+      borderBottom: '1px solid #1e293b',
+      boxShadow: '0 1px 4px rgba(0,0,0,0.3)'
     }}>
       <div style={{
         display: 'flex',
@@ -30,7 +30,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             className="lg:hidden"
             style={{
               padding: '8px',
-              color: '#6b7280',
+            color: '#94a3b8',
               borderRadius: '8px',
               border: 'none',
               backgroundColor: 'transparent',
@@ -42,7 +42,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             </svg>
           </button>
           <div className="hidden sm:block">
-            <h1 style={{ fontSize: '18px', fontWeight: '600', color: '#111827' }}>
+            <h1 style={{ fontSize: '18px', fontWeight: '600', color: '#f1f5f9' }}>
               Vehicle Tracking System
             </h1>
           </div>
@@ -54,7 +54,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
           <button style={{
             position: 'relative',
             padding: '8px',
-            color: '#6b7280',
+            color: '#94a3b8',
             borderRadius: '8px',
             border: 'none',
             backgroundColor: 'transparent',
@@ -80,13 +80,13 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             alignItems: 'center',
             gap: '12px',
             paddingLeft: '12px',
-            borderLeft: '1px solid #e5e7eb'
+            borderLeft: '1px solid #1e293b'
           }}>
             <div className="hidden sm:block" style={{ textAlign: 'right' }}>
-              <p style={{ fontSize: '14px', fontWeight: '500', color: '#111827' }}>
+              <p style={{ fontSize: '14px', fontWeight: '500', color: '#f1f5f9' }}>
                 {user?.name || 'User'}
               </p>
-              <p style={{ fontSize: '12px', color: '#6b7280' }}>{user?.email || 'user@example.com'}</p>
+              <p style={{ fontSize: '12px', color: '#94a3b8' }}>{user?.email || 'user@example.com'}</p>
             </div>
             <div style={{ position: 'relative' }} className="group">
               <button style={{
@@ -96,7 +96,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                background: 'linear-gradient(to bottom right, #3b82f6, #22d3ee)',
+                background: 'linear-gradient(to bottom right, #65a30d, #84cc16)',
                 color: 'white',
                 fontWeight: '500',
                 border: 'none',
