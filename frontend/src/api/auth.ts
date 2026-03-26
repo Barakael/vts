@@ -3,7 +3,7 @@ import type { UserResponse } from '../types/telemetry';
 
 const API_PREFIX = '/api';
 
-type LoginPayload = { email: string; password: string };
+type LoginPayload = { email: string; password: string; remember?: boolean };
 type RegisterPayload = { name: string; email: string; password: string; password_confirmation: string };
 
 const ensureCsrf = async (): Promise<void> => {
