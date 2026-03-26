@@ -3,7 +3,6 @@ import type { FormEvent } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { login } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
-import client from '../api/client';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,6 +12,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,24 +22,11 @@ export default function Login() {
     setLoading(true);
 
     try {
-      console.log('Login form submitted with:', { email, password });
-      
-      // Ensure CSRF token is available
-      console.log('Ensuring CSRF token...');
-      await client.get('/sanctum/csrf-cookie');
-      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for cookie
-      
-      console.log('Making login request...');
-      const response = await login({ email, password });
-      console.log('Login response:', response);
-      
+      await login({ email, password, remember });
       await refreshUser();
-      
-      // Redirect to the intended page or dashboard
       const from = location.state?.from?.pathname || '/dashboard';
       navigate(from, { replace: true });
     } catch (err: unknown) {
-      console.error('Login error:', err);
       const error = err as { response?: { data?: { message?: string } } };
       setError(error.response?.data?.message || 'Invalid credentials. Please try again.');
     } finally {
@@ -54,7 +41,7 @@ export default function Login() {
         className="hidden lg:flex"
         style={{
           width: '50%',
-          background: 'linear-gradient(to bottom right, #111827, #1e3a5f, #111827)',
+          background: 'linear-gradient(135deg, #0f172a 0%, #1a2e12 50%, #0f172a 100%)',
           padding: '48px',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -69,11 +56,11 @@ export default function Login() {
               width: '48px',
               height: '48px',
               borderRadius: '12px',
-              background: 'linear-gradient(to bottom right, #3b82f6, #22d3ee)',
+              background: 'linear-gradient(to bottom right, #65a30d, #84cc16)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 10px 25px rgba(59, 130, 246, 0.3)'
+              boxShadow: '0 10px 25px rgba(132, 204, 22, 0.3)'
             }}>
               <svg style={{ width: '28px', height: '28px', color: 'white' }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -90,7 +77,7 @@ export default function Login() {
             Vehicle Tracking
             <br />
             <span style={{ 
-              background: 'linear-gradient(to right, #60a5fa, #22d3ee)',
+              background: 'linear-gradient(to right, #a3e635, #84cc16)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
@@ -115,12 +102,12 @@ export default function Login() {
                   width: '20px',
                   height: '20px',
                   borderRadius: '50%',
-                  backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                  backgroundColor: 'rgba(132, 204, 22, 0.2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
-                  <svg style={{ width: '12px', height: '12px', color: '#60a5fa' }} fill="currentColor" viewBox="0 0 20 20">
+                  <svg style={{ width: '12px', height: '12px', color: '#84cc16' }} fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -143,7 +130,7 @@ export default function Login() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '32px',
-        backgroundColor: '#f9fafb'
+        backgroundColor: '#0f172a'
       }}>
         <div style={{ width: '100%', maxWidth: '400px' }}>
           {/* Mobile logo */}
@@ -153,7 +140,7 @@ export default function Login() {
                 width: '48px',
                 height: '48px',
                 borderRadius: '12px',
-                background: 'linear-gradient(to bottom right, #3b82f6, #22d3ee)',
+                background: 'linear-gradient(to bottom right, #65a30d, #84cc16)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -163,14 +150,14 @@ export default function Login() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                 </svg>
               </div>
-              <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827' }}>VTS</span>
+              <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#f1f5f9' }}>VTS</span>
             </div>
           </div>
 
           {/* Form header */}
           <div style={{ textAlign: 'center', marginBottom: '32px' }} className="lg:text-left">
-            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827' }}>Welcome back</h2>
-            <p style={{ color: '#6b7280', marginTop: '8px', fontSize: '15px' }}>Sign in to your account to continue</p>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#f1f5f9' }}>Welcome back</h2>
+            <p style={{ color: '#94a3b8', marginTop: '8px', fontSize: '15px' }}>Sign in to your account to continue</p>
           </div>
 
           {/* Error message */}
@@ -189,7 +176,7 @@ export default function Login() {
           {/* Form */}
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '20px' }}>
-              <label htmlFor="email" style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+              <label htmlFor="email" style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#cbd5e1', marginBottom: '6px' }}>
                 Email address
               </label>
               <input
@@ -202,11 +189,11 @@ export default function Login() {
                 style={{
                   width: '100%',
                   padding: '12px 16px',
-                  backgroundColor: 'white',
-                  border: '1px solid #d1d5db',
+                  backgroundColor: '#1e293b',
+                  border: '1px solid #334155',
                   borderRadius: '8px',
                   fontSize: '15px',
-                  color: '#111827',
+                  color: '#f1f5f9',
                   outline: 'none',
                   boxSizing: 'border-box'
                 }}
@@ -215,10 +202,10 @@ export default function Login() {
 
             <div style={{ marginBottom: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <label htmlFor="password" style={{ fontSize: '14px', fontWeight: '500', color: '#374151' }}>
+                <label htmlFor="password" style={{ fontSize: '14px', fontWeight: '500', color: '#cbd5e1' }}>
                   Password
                 </label>
-                <a href="/forgot-password" style={{ fontSize: '14px', color: '#2563eb', textDecoration: 'none' }}>
+                <a href="/forgot-password" style={{ fontSize: '14px', color: '#84cc16', textDecoration: 'none' }}>
                   Forgot password?
                 </a>
               </div>
@@ -233,11 +220,11 @@ export default function Login() {
                   style={{
                     width: '100%',
                     padding: '12px 48px 12px 16px',
-                    backgroundColor: 'white',
-                    border: '1px solid #d1d5db',
+                    backgroundColor: '#1e293b',
+                    border: '1px solid #334155',
                     borderRadius: '8px',
                     fontSize: '15px',
-                    color: '#111827',
+                    color: '#f1f5f9',
                     outline: 'none',
                     boxSizing: 'border-box'
                   }}
@@ -254,7 +241,7 @@ export default function Login() {
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
-                    color: '#9ca3af'
+                    color: '#64748b'
                   }}
                 >
                   {showPassword ? (
@@ -275,9 +262,11 @@ export default function Login() {
               <input
                 id="remember"
                 type="checkbox"
-                style={{ width: '16px', height: '16px', accentColor: '#2563eb' }}
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+                style={{ width: '16px', height: '16px', accentColor: '#84cc16' }}
               />
-              <label htmlFor="remember" style={{ marginLeft: '8px', fontSize: '14px', color: '#4b5563' }}>
+              <label htmlFor="remember" style={{ marginLeft: '8px', fontSize: '14px', color: '#94a3b8' }}>
                 Keep me signed in
               </label>
             </div>
@@ -288,15 +277,15 @@ export default function Login() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'linear-gradient(to right, #2563eb, #1d4ed8)',
+                background: loading ? '#334155' : 'linear-gradient(to right, #65a30d, #4d7c0f)',
                 color: 'white',
                 fontWeight: '500',
                 fontSize: '15px',
                 borderRadius: '8px',
                 border: 'none',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                opacity: loading ? 0.5 : 1,
-                boxShadow: '0 10px 25px rgba(37, 99, 235, 0.3)'
+                opacity: loading ? 0.7 : 1,
+                boxShadow: loading ? 'none' : '0 10px 25px rgba(101, 163, 13, 0.35)'
               }}
             >
               {loading ? (
@@ -314,9 +303,9 @@ export default function Login() {
           </form>
 
           {/* Sign up link */}
-          <p style={{ marginTop: '32px', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
+          <p style={{ marginTop: '32px', textAlign: 'center', fontSize: '14px', color: '#64748b' }}>
             Don't have an account?{' '}
-            <Link to="/register" style={{ fontWeight: '500', color: '#2563eb', textDecoration: 'none' }}>
+            <Link to="/register" style={{ fontWeight: '500', color: '#84cc16', textDecoration: 'none' }}>
               Create one now
             </Link>
           </p>
