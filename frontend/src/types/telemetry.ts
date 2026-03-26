@@ -23,6 +23,7 @@ export type Device = {
 export type DevicePosition = {
   id: number;
   recorded_at: string;
+  created_at?: string | null;
   latitude: number;
   longitude: number;
   altitude: number | null;
